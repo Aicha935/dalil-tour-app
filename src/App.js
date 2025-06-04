@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 // الصفحات
@@ -20,28 +20,49 @@ import ProtectedRoute from "./ProtectedRoute";
 import { auth } from "./firebase";
 import { signOut } from "firebase/auth";
 
-// ✅ مكون شريط التنقل
+// ✅ مكون شريط التنقل مع زر الهامبرجر
 function Navbar() {
   const { user } = useAuth();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
     signOut(auth);
+    setMenuOpen(false);
+  };
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
   };
 
   return (
     <nav className="navbar">
       <h2 className="navbar-logo">📍 دليلك السياحي</h2>
-      <ul className="navbar-menu">
-        <li><Link to="/">المدن</Link></li>
+
+      {/* زر الهامبرجر */}
+      <button className="menu-toggle" onClick={toggleMenu} aria-label="Toggle menu">
+        <span className="bar"></span>
+        <span className="bar"></span>
+        <span className="bar"></span>
+      </button>
+
+      {/* قائمة التنقل */}
+      <ul className={`navbar-menu ${menuOpen ? "active" : ""}`}>
+        <li><Link to="/" onClick={closeMenu}>المدن</Link></li>
+
         {user && (
           <>
-            <li><Link to="/add">➕ إضافة</Link></li>
-            <li><Link to="/favorites">❤️ المفضلة</Link></li>
-            <li><Link to="/profile">👤 حسابي</Link></li>
+            <li><Link to="/add" onClick={closeMenu}>➕ إضافة</Link></li>
+            <li><Link to="/favorites" onClick={closeMenu}>❤️ المفضلة</Link></li>
+            <li><Link to="/profile" onClick={closeMenu}>👤 حسابي</Link></li>
           </>
         )}
+
         {!user ? (
-          <li><Link to="/login">🔐 دخول</Link></li>
+          <li><Link to="/login" onClick={closeMenu}>🔐 دخول</Link></li>
         ) : (
           <li>
             <button className="logout-btn" onClick={handleLogout}>
@@ -67,7 +88,6 @@ function App() {
           <Route path="/add" element={<ProtectedRoute><AddPlace /></ProtectedRoute>} />
           <Route path="/place/:placeId" element={<PlaceDetails />} />
           <Route path="/favorites" element={<ProtectedRoute><Favorites /></ProtectedRoute>} />
-         
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         </Routes>
       </Router>
