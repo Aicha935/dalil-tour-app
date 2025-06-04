@@ -1,0 +1,51 @@
+/* تنسيق الخلفية */
+.add-place-bg {
+  background-image: url("/images/tourism-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  padding: 40px;
+  font-family: Tahoma, sans-serif;
+  direction: rtl;
+}
+
+/* تنسيق النموذج */
+.add-place-form {
+  background-color: rgba(255, 255, 255, 0.93);
+  max-width: 500px;
+  margin: auto;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* الحقول */
+.add-place-form input,
+.add-place-form textarea,
+.add-place-form select {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* الزر */
+.add-place-form button {
+  padding: 12px;
+  font-size: 16px;
+  background-color: #0077b6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.add-place-form h2 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #023e8a;
+}
